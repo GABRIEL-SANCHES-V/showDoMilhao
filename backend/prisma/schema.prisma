@@ -1,0 +1,50 @@
+datasource db {
+  provider = "mysql"
+  url = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+enum Role {
+  USER
+  ADMIN
+}
+
+enum GameStatus {
+  PENDING
+  COMPLETED
+  CANCELLED
+}
+
+model User {
+  id Int @id @default(autoincrement())
+  name String @db.VarChar(255)
+  password String @db.VarChar(255) @default ("")
+  score Int @default (0)
+  game Game[]
+  role Role @default(USER)
+  createdAt DateTime @default (now())
+}
+
+model Question {
+  id Int @id @default(autoincrement())
+  statement String
+  alternatives Json
+  correctIndex Int
+  difficult Int @default(1)
+  createdAt DateTime @default(now())
+}
+
+model Game {
+  id Int @id @default(autoincrement())
+  userId Int
+  user User @relation(fields: [userId], references: id)
+  score Int @default(0)
+  questionsIds Json
+  status GameStatus @default(PENDING)
+  createdAt DateTime @default(now())
+}
+
+
