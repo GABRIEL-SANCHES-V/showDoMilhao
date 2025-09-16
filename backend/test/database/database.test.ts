@@ -4,7 +4,7 @@ import assert from 'node:assert';
 import pool from "../../src/database/connectionDB.js";
 
 describe("Database Integration Tests", () => {
-    after(() => {
+    after(() => {  
         pool.end();
     });
 
@@ -14,10 +14,7 @@ describe("Database Integration Tests", () => {
     });
 
     it('should have the correct database name from environment variables', async () => {
-        console.log("Using database:", process.env.DATABASE_NAME);
-        
         const [rows] = await pool.query("SELECT DATABASE() AS dbName") as [Array<{ dbName: string }>, any];
         assert.strictEqual(rows[0].dbName, process.env.DATABASE_NAME, "Database name did not match expected value");
     });
-
 });
