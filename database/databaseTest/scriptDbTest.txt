@@ -1,0 +1,3 @@
+cd database/databaseTest
+chmod +x setupDbTest.sh
+./setupDbTest.sh
