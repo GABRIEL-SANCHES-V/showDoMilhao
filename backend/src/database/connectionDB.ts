@@ -2,10 +2,10 @@ import mysql from 'mysql2/promise';
 import type { Pool } from 'mysql2/promise';
 import dotenv from 'dotenv';
 
-dotenv.config();
+dotenv.config({quiet: true });
 
-class Database {
-    private static instance: Database;
+class connectionDB {
+    private static instance: connectionDB;
     private pool: Pool;
     
     private getEnvVar(name: string): string {
@@ -33,11 +33,11 @@ class Database {
      * Obtém a instância do banco de dados
      * @returns A instância do banco de dados
      */
-    static getInstance(): Database {
-        if (!Database.instance) {
-            Database.instance = new Database();
+    static getInstance(): connectionDB {
+        if (!connectionDB.instance) {
+            connectionDB.instance = new connectionDB();
         }
-        return Database.instance;
+        return connectionDB.instance;
     }
 
     /**
@@ -49,6 +49,4 @@ class Database {
     }
 }
 
-export default Database.getInstance().getPool();
-
-
+export default connectionDB.getInstance().getPool();

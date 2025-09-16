@@ -1,0 +1,3 @@
+cd database
+chmod +x setupDb.sh
+./setupDb.sh

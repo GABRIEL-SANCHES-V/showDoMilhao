@@ -1,1 +1,1 @@
-import pool from './config/connectionDB.js';
+import pool from "./database/connectionDB.js";

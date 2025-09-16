@@ -1,8 +1,8 @@
 #!/bin/bash
 
 # Carregar variáveis do .env na raiz
-if [ -f ../backend/.env ]; then
-  export $(grep -v '^#' ../backend/.env | xargs)
+if [ -f ../../backend/.env ]; then
+  export $(grep -v '^#' ../../backend/.env | xargs)
 else
   echo ".env não encontrado na pasta raiz!"
   exit 1
