@@ -12,7 +12,7 @@ class UserQueries {
      * @returns Todos os usuários do banco de dados
      */
     public async getAllUsers() {
-        const sql = "SELECT * FROM users";
+        const sql = "SELECT * FROM user";
         const [rows] = await this.db.query(sql);
         return rows;
     }
@@ -22,11 +22,28 @@ class UserQueries {
      * @param name - Nome do usuário
      * @returns O usuário criado com o ID gerado
     */
-    public async createUser(name: string) {
-        const sql = "INSERT INTO users (name) VALUES (?)";
-        const [result] = await this.db.query(sql, [name]);
+    public async createUser(name: string, score: number) {
+        const sql = "INSERT INTO user (name, score) VALUES (?, ?)";
+        const [result] = await this.db.query(sql, [name, score]);
         const insertId = (result as any).insertId;
-        return { id: insertId, name };
+        return { id: insertId, name, score };
+    }
+
+    /**
+     * Limpa todos os usuários do banco de dados
+     */
+    public async clearUsers() {
+        const sql = "DELETE FROM user";
+        const reset_id = "ALTER TABLE user AUTO_INCREMENT = 1";
+        await this.db.query(sql);
+        await this.db.query(reset_id);
+    }
+
+    /**
+     * Fecha a conexão com o banco de dados
+     */
+    public closeConnection() {
+        this.db.closeConnection();
     }
 
 }

@@ -8,7 +8,7 @@
     "dev": "nodemon",
     "build": "tsc",
     "start": "node dist/index.js",
-    "test": "node --import tsx --import ./test/setup.ts --test --test-reporter=spec test/**/*.test.ts"
+    "test": "node --import tsx --import ./test/setup.ts --test --test-reporter=spec"
   },
   "keywords": [],
   "author": "",
