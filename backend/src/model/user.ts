@@ -8,15 +8,15 @@ import userQueries from "../database/queriesTables/userQueries.js";
  */
 class User {
     private queries = userQueries;
-    private name: String;
-    private score: Number;
+    private name: string;
+    private score: number;
 
     /**
      * Constructor to initialize a User object
      * @param name - Name of the user
      * @param score - Score of the user
      */
-    public constructor(name: String = 'getRanking', score: Number = 0) { 
+    public constructor(name: string = 'getRanking', score: number = 0) { 
         this.name = name;
         this.score = score;
     }
@@ -24,28 +24,43 @@ class User {
     /**
      * Method to register a new user in the database
      * @return Object with the status of the operation
+     * @error Throws an error if there is an issue creating the user
      */
     public createUser () {
-        const response = this.queries.createUser(this.name, this.score);
-        return response;
+        try {
+            const response = this.queries.createUser(this.name, this.score);
+            return response;
+        } catch (error) {
+            throw error;
+        }
     }
 
     /**
      * Method to get all users from the database
      * @return Array of users
+     * @error Throws an error if there is an issue retrieving users
      */
     public getAllUsers() {
-        const response = this.queries.getAllUsers();
-        return response;
+        try {
+            const response = this.queries.getAllUsers();
+            return response;
+        } catch (error) {
+            throw error;
+        }
     }
 
     /**
      * Method to clear all users from the database
      * @return Object with the status of the operation
+     * @error Throws an error if there is an issue clearing users
      */
     public clearUsers() {
-        const response = this.queries.clearUsers();
-        return response;
+        try {
+            const response = this.queries.clearUsers();
+            return response;
+        } catch (error) {
+            throw error;
+        }
     }
 
     // Getters and Setters
@@ -57,14 +72,13 @@ class User {
         return this.score;
     }
 
-    public setName(name: String) {
+    public setName(name: string) {
         this.name = name;
     }
     
-    public setScore(score: Number) {
+    public setScore(score: number) {
         this.score = score;
     }
 }
-
 
 export default User;

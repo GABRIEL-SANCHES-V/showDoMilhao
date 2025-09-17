@@ -8,52 +8,75 @@ class UserQueries {
     }
 
     /**
-     * 
-     * @returns Todos os usuários do banco de dados
+     * Get all users from the database ordered by score in descending order
+     * @returns Array of users with their scores
+     * @error Throws an error if there is an issue retrieving users
      */
     public async getAllUsers() {
-        const sql = "SELECT name, score FROM user ORDER BY score DESC";
-        const [rows] = await this.db.query(sql);
+        try {
+            const sql = "SELECT name, score FROM user ORDER BY score DESC";
+            const [rows] = await this.db.query(sql);
 
-        return {
-            users: rows,
-            status: true
-        };
+            return {
+                users: rows,
+                status: true
+            };
+        } catch (error) {
+            throw error;
+        }
     }
 
     /**
-     * Cria um novo usuário no banco de dados
-     * @param name - Nome do usuário
-     * @returns O usuário criado com o ID gerado
+     * Creates a new user in the database
+     * @param name - String - Name of the user
+     * @param score - Number - Score of the user
+     * @returns The created user with the generated ID
+     * @error Throws an error if there is an issue creating the user
     */
-    public async createUser(name: String, score: Number) {
-        const sql = "INSERT INTO user (name, score) VALUES (?, ?)";
-        const [result] = await this.db.query(sql, [name, score]);
-        const insertId = (result as any).insertId;
+    public async createUser(name: string, score: number) {
+        try {
+            const sql = "INSERT INTO user (name, score) VALUES (?, ?)";
+            const [result] = await this.db.query(sql, [name, score]);
+            const insertId = (result as any).insertId;
 
-        return { id: insertId, name, score, status: true };
+            return { id: insertId, name, score, status: true };
+
+        } catch (error) {
+            throw error;
+        }
     }
 
     /**
-     * Limpa todos os usuários do banco de dados
+     * Clears all users from the database
+     * @returns Object with the status of the operation
+     * @error Throws an error if there is an issue clearing users
      */
     public async clearUsers() {
-        const sql = "DELETE FROM user";
-        const reset_id = "ALTER TABLE user AUTO_INCREMENT = 1";
+        try {
+            const sql = "DELETE FROM user";
+            const reset_id = "ALTER TABLE user AUTO_INCREMENT = 1";
 
-        await this.db.query(sql);
-        await this.db.query(reset_id);
+            await this.db.query(sql);
+            await this.db.query(reset_id);
 
-        return { status: true };
+            return { status: true };
+        } catch (error) {
+            throw error;
+        }
     }
 
     /**
-     * Fecha a conexão com o banco de dados
+     * Closes the database connection
+     * @returns void
+     * @error Throws an error if there is an issue closing the connection
      */
     public closeConnection() {
-        this.db.closeConnection();
+        try {
+            this.db.closeConnection();
+        } catch (error) {
+            throw error;
+        }
     }
-
 }
 
 export default new UserQueries();
