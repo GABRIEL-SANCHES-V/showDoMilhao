@@ -6,19 +6,27 @@ import userQueries from "../database/queriesTables/userQueries.js";
  * @method getAllUsers - Method to get all users
  * @method clearUsers - Method to clear all users
  */
-class UserModel {
+class User {
     private queries = userQueries;
+    private name: String;
+    private score: Number;
 
-    public constructor() { }
+    /**
+     * Constructor to initialize a User object
+     * @param name - Name of the user
+     * @param score - Score of the user
+     */
+    public constructor(name: String = 'getRanking', score: Number = 0) { 
+        this.name = name;
+        this.score = score;
+    }
 
     /**
      * Method to register a new user in the database
-     * @param name - String with the user's name
-     * @param scores - Number with the user's scores
      * @return Object with the status of the operation
      */
-    public createUser (name: String, scores:Number) {
-        const response = this.queries.createUser(name, scores);
+    public createUser () {
+        const response = this.queries.createUser(this.name, this.score);
         return response;
     }
 
@@ -39,4 +47,24 @@ class UserModel {
         const response = this.queries.clearUsers();
         return response;
     }
+
+    // Getters and Setters
+    public getName() {
+        return this.name;
+    }
+
+    public getScore() {
+        return this.score;
+    }
+
+    public setName(name: String) {
+        this.name = name;
+    }
+    
+    public setScore(score: Number) {
+        this.score = score;
+    }
 }
+
+
+export default User;

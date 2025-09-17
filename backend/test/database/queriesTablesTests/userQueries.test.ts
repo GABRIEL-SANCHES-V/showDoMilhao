@@ -48,15 +48,20 @@ describe("UserQueries Integration Tests", () => {
 
     it('Should retrieve all users', async () => {
         const users = await UserQueries.getAllUsers();
-        assert.ok(Array.isArray(users), "Users should be an array");
-        assert.ok(users.length === 11, "There should be exactly 11 users in the database");
+        assert.ok(Array.isArray(users.users), "Users should be an array");
+        assert.ok(users.users.length == 11, "There should be exactly 11 users in the database");
     });
 
     it('Should clear all users', async () => {
-        await UserQueries.clearUsers();
+        const response = await UserQueries.clearUsers();
+        
+        if (!response.status) {
+            throw new Error("Failed to clear users");
+        }
+        
         const users = await UserQueries.getAllUsers();
-        assert.ok(Array.isArray(users), "Users should be an array");
-        assert.ok(users.length === 0, "There should be no users in the database");
+        assert.ok(Array.isArray(users.users), "Users should be an array");
+        assert.ok(users.users.length === 0, "There should be no users in the database");
     });
 
 });

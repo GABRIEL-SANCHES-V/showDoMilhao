@@ -12,7 +12,7 @@ class UserQueries {
      * @returns Todos os usuários do banco de dados
      */
     public async getAllUsers() {
-        const sql = "SELECT * FROM user";
+        const sql = "SELECT name, score FROM user ORDER BY score DESC";
         const [rows] = await this.db.query(sql);
 
         return {
