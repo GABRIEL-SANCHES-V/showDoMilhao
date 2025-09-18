@@ -1,5 +1,10 @@
 import questionQueries from "../database/queriesTables/questionQueries.js";
 
+/**
+ * Model class for Question-related operations
+ * @method addQuestion - Method to add a new question
+ * @method getRandomQuestions - Method to get 10 random questions
+ */
 class Question{
     private queries = questionQueries;
     private questionLevel: string;
@@ -42,3 +47,5 @@ class Question{
         }
     }
 }
+
+export default Question;
