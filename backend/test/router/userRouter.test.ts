@@ -1,11 +1,12 @@
-import { after, afterEach, beforeEach, describe, it} from 'node:test';
+import { after, beforeEach, describe, it} from 'node:test';
 import assert from 'node:assert';
 import request from 'supertest';
 import app from '../../src/app.js';
+import pool from '../../src/database/connectionDB.js';
 
 describe('User Routes Tests', {concurrency: false},() => {
-    after(async () => {
-        process.exit(0);
+    after(() => {
+        pool.end();
     });
 
     beforeEach(async () => {
@@ -43,7 +44,6 @@ describe('User Routes Tests', {concurrency: false},() => {
     });
 
     it('GET /api/ranking - should retrieve user rankings', async () => {
-
         const response = await request(app)
             .get('/api/ranking')
             .expect('Content-Type', /json/)
@@ -61,8 +61,5 @@ describe('User Routes Tests', {concurrency: false},() => {
             .expect(200);
 
         assert.strictEqual(response.body.status, true, 'Failed to clear all users');
-    });
-
-    after(async () => {
     });
 });
