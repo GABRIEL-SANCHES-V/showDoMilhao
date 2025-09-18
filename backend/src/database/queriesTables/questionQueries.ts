@@ -23,12 +23,12 @@ class QuestionQueries {
             
             const sql = "INSERT INTO question (questionLevel, statement, alternativeA, alternativeB, alternativeC, alternativeD, correctAnswer) VALUES (?, ?, ?, ?, ?, ?, ?)";
             const [result] = await this.db.query(sql, [questionLevel, statement, alternativeA, alternativeB, alternativeC, alternativeD, correctAnswer]);
-            const insertId = (result as any).insertId;
+            const insertId = Number((result as any).insertId);
 
             return { id: insertId , status: true };
 
         } catch (error) {
-        throw error;
+            throw error;
         }
     }
 
@@ -53,7 +53,7 @@ class QuestionQueries {
             status: true
         };
         } catch (error) {
-        throw error;
+            throw error;
         }
     }
 
