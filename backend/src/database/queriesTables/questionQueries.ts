@@ -89,3 +89,5 @@ class QuestionQueries {
         }
     }
 }
+
+export default new QuestionQueries();
