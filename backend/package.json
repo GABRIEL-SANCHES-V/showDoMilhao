@@ -8,20 +8,24 @@
     "dev": "nodemon",
     "build": "tsc",
     "start": "node dist/index.js",
-    "test": "node --import tsx --import ./test/setup.ts --test --test-reporter=spec test/**/*.test.ts"
+    "test": "node --import tsx --import ./test/setup.ts --test --test-concurrency=1 --test-reporter=spec"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@types/express": "^5.0.3",
     "@types/node": "^24.5.0",
+    "@types/supertest": "^6.0.3",
     "nodemon": "^3.1.10",
+    "supertest": "^7.1.4",
     "ts-node": "^10.9.2",
     "tsx": "^4.20.5",
     "typescript": "^5.9.2"
   },
   "dependencies": {
     "dotenv": "^17.2.2",
+    "express": "^5.1.0",
     "mysql2": "^3.14.5"
   }
 }

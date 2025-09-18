@@ -4,8 +4,8 @@ import dotenv from 'dotenv';
 
 dotenv.config({quiet: true });
 
-class connectionDB {
-    private static instance: connectionDB;
+class ConnectionDB {
+    private static instance: ConnectionDB;
     private pool: Pool;
     
     private getEnvVar(name: string): string {
@@ -33,11 +33,11 @@ class connectionDB {
      * Obtém a instância do banco de dados
      * @returns A instância do banco de dados
      */
-    static getInstance(): connectionDB {
-        if (!connectionDB.instance) {
-            connectionDB.instance = new connectionDB();
+    static getInstance(): ConnectionDB {
+        if (!ConnectionDB.instance) {
+            ConnectionDB.instance = new ConnectionDB();
         }
-        return connectionDB.instance;
+        return ConnectionDB.instance;
     }
 
     /**
@@ -49,4 +49,4 @@ class connectionDB {
     }
 }
 
-export default connectionDB.getInstance().getPool();
+export default ConnectionDB.getInstance().getPool();
