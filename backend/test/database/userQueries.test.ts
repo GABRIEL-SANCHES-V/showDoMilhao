@@ -3,14 +3,17 @@ import assert from 'node:assert';
 
 import UserQueries from "../../src/database/queriesTables/userQueries.js";
 
-describe("UserQueries Integration Tests", () => {
+describe("UserQueries Integration Tests", {concurrency: false} , () => {
     after(async () => {
-        UserQueries.closeConnection();
+        UserQueries.closeConnectionDB();
     });
 
     afterEach(async () => {
         await UserQueries.clearUsers();
-        
+    });
+
+    beforeEach(async () => {
+        await UserQueries.clearUsers();
     });
 
     it('should have the correct database name from environment variables', async () => {
@@ -22,11 +25,9 @@ describe("UserQueries Integration Tests", () => {
         const user = await UserQueries.createUser('John Doe', 0);
         const userId = user.id;
         const userName = user.name;
-        const userScore = user.score;
 
         assert.ok(userId, "User ID should be defined");
         assert.strictEqual(userName, 'John Doe', "User name should match the input");
-        assert.strictEqual(userScore, 0, "User score should match the input");
     });
 
     it('slould register many users', async () => {
@@ -47,7 +48,6 @@ describe("UserQueries Integration Tests", () => {
             const createdUser = await UserQueries.createUser(user.name, user.score);
             assert.ok(createdUser.id, "User ID should be defined");
             assert.strictEqual(createdUser.name, user.name, "User name should match the input");
-            assert.strictEqual(createdUser.score, user.score, "User score should match the input");
         }
     });
 
@@ -68,7 +68,7 @@ describe("UserQueries Integration Tests", () => {
         for (const user of listUsers) {
             await UserQueries.createUser(user.name, user.score);
         }
-        const users = await UserQueries.getAllUsers();       
+        const users = await UserQueries.getAllUsers();
         assert.ok(Array.isArray(users.users), "Users should be an array");
         assert.ok(users.users.length == 10, "There should be exactly 10 users in the database");
     });

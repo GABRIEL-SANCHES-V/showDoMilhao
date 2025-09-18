@@ -39,7 +39,7 @@ class UserQueries {
             const [result] = await this.db.query(sql, [name, score]);
             const insertId = (result as any).insertId;
 
-            return { id: insertId, name, score, status: true };
+            return { id: insertId, name, status: true };
 
         } catch (error) {
             throw error;
@@ -70,7 +70,7 @@ class UserQueries {
      * @returns void
      * @error Throws an error if there is an issue closing the connection
      */
-    public closeConnection() {
+    public async closeConnectionDB() {
         try {
             this.db.closeConnection();
         } catch (error) {
