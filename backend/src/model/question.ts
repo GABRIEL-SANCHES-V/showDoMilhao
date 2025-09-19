@@ -2,6 +2,7 @@ import questionQueries from "../database/queriesTables/questionQueries.js";
 
 /**
  * Model class for Question-related operations
+ * @constructor - Initializes a Question object
  * @method addQuestion - Method to add a new question
  * @method getRandomQuestions - Method to get 10 random questions
  */
@@ -12,6 +13,14 @@ class Question{
     private options: string[];
     private correctAnswer: string;
 
+
+    /**
+     * Method constructor to initialize a Question object
+     * @param questionLevel: string - Level of the question (easy, medium, hard)
+     * @param statement: string - The question statement
+     * @param options: string[] - The answer options for the question
+     * @param correctAnswer: string - The correct answer for the question
+     */
     public constructor(questionLevel: string = 'easy', statement: string = '', options: string[] = [], correctAnswer: string = '') {
         this.questionLevel = questionLevel;
         this.statement = statement;

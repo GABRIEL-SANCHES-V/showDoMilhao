@@ -22,7 +22,7 @@ describe("GameQueries Integration Tests", {concurrency: false} , () => {
 
     it("should start a game for a user", async () => {
         const user = { name: "Test User", score: 0 };
-        const userId = (await UserQueries.createUser(user.name, user.score)).id;
+        const userId = (await UserQueries.registerUser(user.name)).id;
         const questionIds = [1, 2, 3, 4, 5];
 
         const result = await GameQueries.startGame(userId, questionIds);
@@ -38,7 +38,7 @@ describe("GameQueries Integration Tests", {concurrency: false} , () => {
 
     it("should finish a game for a user", async () => {
         const user = { name: "Test User", score: 0 };
-        const userId = (await UserQueries.createUser(user.name, user.score)).id;
+        const userId = (await UserQueries.registerUser(user.name)).id;
         const questionIds = [6, 7, 8, 9, 10];
         const score = 3000; 
 
@@ -55,7 +55,7 @@ describe("GameQueries Integration Tests", {concurrency: false} , () => {
 
     it("should delete an in-progress game for a user", async () => {
         const user = { name: "Test User", score: 0 };
-        const userId = (await UserQueries.createUser(user.name, user.score)).id;
+        const userId = (await UserQueries.registerUser(user.name)).id;
         const questionIds = [11, 12, 13, 14, 15];
 
         await GameQueries.startGame(userId, questionIds);

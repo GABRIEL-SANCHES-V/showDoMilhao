@@ -10,16 +10,16 @@ import userQueries from "../database/queriesTables/userQueries.js";
 class User {
     private queries = userQueries;
     private name: string;
-    private score: number;
+    private userId?: number;
+
 
     /**
      * Constructor to initialize a User object
      * @param name - Name of the user
      * @param score - Score of the user
      */
-    public constructor(name: string = 'getRanking', score: number = 0) { 
+    public constructor(name: string = 'getRanking') { 
         this.name = name;
-        this.score = score;
     }
 
     /**
@@ -27,9 +27,10 @@ class User {
      * @return The created user with the generated ID and status true
      * @error Throws an error if there is an issue creating the user
      */
-    public async createUser (): Promise<{ id: number, name: string, status: boolean }> {
+    public async RegisterUserinDB (): Promise<{ id: number, name: string, status: boolean }> {
         try {
-            const response = await this.queries.createUser(this.name, this.score);
+            const response = await this.queries.registerUser(this.name);
+            this.userId = response.id;
             return response;
         } catch (error) {
             throw error;
@@ -41,7 +42,7 @@ class User {
      * @return Array of users
      * @error Throws an error if there is an issue retrieving users
      */
-    public async getAllUsers(): Promise<{ users: QueryResult; status: boolean }> {
+    public async getAllUsers(): Promise<{ users: { name: string, score: number }[]; status: boolean }> {
         try {
             const response = await this.queries.getAllUsers();
             return response;
@@ -78,6 +79,14 @@ class User {
         } catch (error) {
             throw error;
         }
+    }
+
+    public getName(): string {
+        return this.name;
+    }
+    
+    public getUserId(): number | undefined {
+        return this.userId;
     }
 }
 

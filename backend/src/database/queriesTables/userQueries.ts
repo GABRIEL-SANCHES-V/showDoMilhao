@@ -13,13 +13,18 @@ class UserQueries {
      * @returns Array of users with their scores
      * @error Throws an error if there is an issue retrieving users
      */
-    public async getAllUsers(): Promise<{ users: QueryResult, status: boolean }> {
+    public async getAllUsers(): Promise<{ users: { name: string, score: number }[], status: boolean }> {
         try {
             const sql = "SELECT name, score FROM user ORDER BY score DESC";
             const [rows] = await this.db.query(sql);
 
+            const listUsers: { name: string, score: number }[] = [];
+            for (const row of rows as any[]) {
+                listUsers.push({ name: row.name, score: row.score });
+            }
+
             return {
-                users: rows,
+                users: listUsers,
                 status: true
             };
         } catch (error) {
@@ -28,16 +33,16 @@ class UserQueries {
     }
 
     /**
-     * Creates a new user in the database
+     * Register a new user in the database
      * @param name - String - Name of the user
      * @param score - Number - Score of the user
      * @returns The created user with the generated ID
      * @error Throws an error if there is an issue creating the user
     */
-    public async createUser(name: string, score: number): Promise<{ id: number, name: string, status: boolean }> {
+    public async registerUser(name: string): Promise<{ id: number, name: string, status: boolean }> {
         try {
-            const sql = "INSERT INTO user (name, score) VALUES (?, ?)";
-            const [result] = await this.db.query(sql, [name, score]);
+            const sql = "INSERT INTO user (name) VALUES (?)";
+            const [result] = await this.db.query(sql, [name]);
             const insertId = (result as any).insertId;
 
             return { id: insertId, name, status: true };

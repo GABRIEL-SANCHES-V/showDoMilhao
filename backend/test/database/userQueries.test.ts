@@ -23,7 +23,7 @@ describe("UserQueries Integration Tests", {concurrency: false} , () => {
     });
 
     it('Should register a new user', async () => {
-        const user = await UserQueries.createUser('John Doe', 0);
+        const user = await UserQueries.registerUser('John Doe');
         const userId = user.id;
         const userName = user.name;
 
@@ -46,7 +46,7 @@ describe("UserQueries Integration Tests", {concurrency: false} , () => {
         ]
 
         for (const user of listUsers) {
-            const createdUser = await UserQueries.createUser(user.name, user.score);
+            const createdUser = await UserQueries.registerUser(user.name);
             assert.ok(createdUser.id, "User ID should be defined");
             assert.strictEqual(createdUser.name, user.name, "User name should match the input");
         }
@@ -67,7 +67,7 @@ describe("UserQueries Integration Tests", {concurrency: false} , () => {
         ]
 
         for (const user of listUsers) {
-            await UserQueries.createUser(user.name, user.score);
+            await UserQueries.registerUser(user.name);
         }
         const users = await UserQueries.getAllUsers();
         assert.ok(Array.isArray(users.users), "Users should be an array");
@@ -82,7 +82,7 @@ describe("UserQueries Integration Tests", {concurrency: false} , () => {
     });
 
     it('Should update a user score', async () => {
-        const user = await UserQueries.createUser('John Doe', 0);
+        const user = await UserQueries.registerUser('John Doe');
         const userId = user.id;
 
         await UserQueries.updateScore(userId, 150);
