@@ -2,10 +2,11 @@ import { afterEach, describe, beforeEach, it, after} from 'node:test';
 import assert from 'node:assert';
 
 import QuestionQueries from "../../src/database/queriesTables/questionQueries.js";
+import connection from "../../src/database/connectionDB.js";
 
 describe("QuestionQueries Integration Tests", {concurrency: false} , () => {
     after(async () => {
-        QuestionQueries.closeConnection();
+        connection.end();
     });
 
     afterEach(async () => {

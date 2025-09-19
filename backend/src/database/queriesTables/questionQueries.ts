@@ -75,19 +75,6 @@ class QuestionQueries {
             throw error;
         }
     }
-
-    /**
-     * closes the database connection
-     * @returns void
-     * @error Throws an error if there is an issue closing the connection
-     */
-    public async closeConnection(): Promise<void> {
-        try {
-            this.db.closeConnection();
-        } catch (error) {
-            throw error;
-        }
-    }
 }
 
 export default new QuestionQueries();
