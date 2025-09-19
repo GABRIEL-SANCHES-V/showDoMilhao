@@ -1,3 +1,4 @@
+import type { QueryResult } from "mysql2";
 import Database from "../database.js";
 
 class UserQueries {
@@ -12,7 +13,7 @@ class UserQueries {
      * @returns Array of users with their scores
      * @error Throws an error if there is an issue retrieving users
      */
-    public async getAllUsers() {
+    public async getAllUsers(): Promise<{ users: QueryResult, status: boolean }> {
         try {
             const sql = "SELECT name, score FROM user ORDER BY score DESC";
             const [rows] = await this.db.query(sql);
@@ -33,7 +34,7 @@ class UserQueries {
      * @returns The created user with the generated ID
      * @error Throws an error if there is an issue creating the user
     */
-    public async createUser(name: string, score: number) {
+    public async createUser(name: string, score: number): Promise<{ id: number, name: string, status: boolean }> {
         try {
             const sql = "INSERT INTO user (name, score) VALUES (?, ?)";
             const [result] = await this.db.query(sql, [name, score]);
@@ -51,7 +52,7 @@ class UserQueries {
      * @returns Object with the status of the operation
      * @error Throws an error if there is an issue clearing users
      */
-    public async clearUsers() {
+    public async clearUsers(): Promise<{ status: boolean }> {
         try {
             const sql = "DELETE FROM user";
             const reset_id = "ALTER TABLE user AUTO_INCREMENT = 1";
@@ -66,13 +67,16 @@ class UserQueries {
     }
 
     /**
-     * Closes the database connection
-     * @returns void
-     * @error Throws an error if there is an issue closing the connection
+     * Updates the score of a user in the database
+     * @param userId : number - ID of the user
+     * @param score : number - New score of the user
      */
-    public async closeConnectionDB() {
+    public async updateScore(userId: number, score: number): Promise<{ status: boolean }> {
         try {
-            this.db.closeConnection();
+            const sql = "UPDATE user SET score = ? WHERE id = ?";
+            await this.db.query(sql, [score, userId]);
+
+            return { status: true };
         } catch (error) {
             throw error;
         }

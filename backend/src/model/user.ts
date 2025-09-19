@@ -1,3 +1,4 @@
+import type { Query, QueryResult } from "mysql2";
 import userQueries from "../database/queriesTables/userQueries.js";
 
 /**
@@ -23,12 +24,12 @@ class User {
 
     /**
      * Method to register a new user in the database
-     * @return Object with the status of the operation
+     * @return The created user with the generated ID and status true
      * @error Throws an error if there is an issue creating the user
      */
-    public createUser () {
+    public async createUser (): Promise<{ id: number, name: string, status: boolean }> {
         try {
-            const response = this.queries.createUser(this.name, this.score);
+            const response = await this.queries.createUser(this.name, this.score);
             return response;
         } catch (error) {
             throw error;
@@ -40,9 +41,9 @@ class User {
      * @return Array of users
      * @error Throws an error if there is an issue retrieving users
      */
-    public getAllUsers() {
+    public async getAllUsers(): Promise<{ users: QueryResult; status: boolean }> {
         try {
-            const response = this.queries.getAllUsers();
+            const response = await this.queries.getAllUsers();
             return response;
         } catch (error) {
             throw error;
@@ -51,33 +52,32 @@ class User {
 
     /**
      * Method to clear all users from the database
-     * @return Object with the status of the operation
+     * @return status of the operation
      * @error Throws an error if there is an issue clearing users
      */
-    public clearUsers() {
+    public async clearUsers(): Promise<{ status: boolean }> {
         try {
-            const response = this.queries.clearUsers();
+            const response = await this.queries.clearUsers();
             return response;
         } catch (error) {
             throw error;
         }
     }
 
-    // Getters and Setters
-    public getName() {
-        return this.name;
-    }
-
-    public getScore() {
-        return this.score;
-    }
-
-    public setName(name: string) {
-        this.name = name;
-    }
-    
-    public setScore(score: number) {
-        this.score = score;
+    /**
+     * Method to update the user's score
+     * @param userId : number - ID of the user
+     * @param score : number - New score to set
+     * @returns status of the operation
+     * @error Throws an error if there is an issue updating the score
+     */
+    public async updateScore(userId: number, score: number): Promise<{ status: boolean }> {
+        try {
+            const response = await this.queries.updateScore(userId, score);
+            return response;
+        } catch (error) {
+            throw error;
+        }
     }
 }
 

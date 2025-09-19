@@ -2,10 +2,11 @@ import { afterEach, describe, beforeEach, it, after} from 'node:test';
 import assert from 'node:assert';
 
 import UserQueries from "../../src/database/queriesTables/userQueries.js";
+import connection from "../../src/database/connectionDB.js";
 
 describe("UserQueries Integration Tests", {concurrency: false} , () => {
     after(async () => {
-        UserQueries.closeConnectionDB();
+        connection.end();
     });
 
     afterEach(async () => {
@@ -78,5 +79,18 @@ describe("UserQueries Integration Tests", {concurrency: false} , () => {
         const users = await UserQueries.getAllUsers();
         assert.ok(Array.isArray(users.users), "Users should be an array");
         assert.ok(users.users.length === 0, "There should be no users in the database");
+    });
+
+    it('Should update a user score', async () => {
+        const user = await UserQueries.createUser('John Doe', 0);
+        const userId = user.id;
+
+        await UserQueries.updateScore(userId, 150);
+        const users = await UserQueries.getAllUsers();
+        const score = (users.users as any)[0].score;
+
+        assert.ok(Array.isArray(users.users), "Users should be an array");
+        assert.ok(users.users.length === 1, "There should be exactly one user in the database");
+        assert.strictEqual(score, 150, "User score should be updated to 150");
     });
 });
