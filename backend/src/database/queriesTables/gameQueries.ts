@@ -13,11 +13,12 @@ class GameQueries {
      * @param questionIds - Array of question IDs for the game
      * @returns Promise that resolves when the game is started
      */
-    public async startGame(userId: number, questionIds: number[]): Promise<boolean> {
+    public async startGame(userId: number, questionIds: number[]): Promise<{ id: number, status: boolean }> {
         try{
             const sql = "INSERT INTO game (userId, questionIds) VALUES (?, ?)";
-            await this.db.query(sql, [userId, JSON.stringify(questionIds)]);
-            return true;
+            const result = await this.db.query(sql, [userId, JSON.stringify(questionIds)]);
+            const gameId = (result as any).insertId;
+            return { id: gameId, status: true };
         } catch (error) {
             throw error;
         }

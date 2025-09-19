@@ -26,7 +26,7 @@ describe("GameQueries Integration Tests", {concurrency: false} , () => {
         const questionIds = [1, 2, 3, 4, 5];
 
         const result = await GameQueries.startGame(userId, questionIds);
-        assert.strictEqual(result, true);
+        assert.strictEqual((result.status), true);
 
         const [rows] = await connection.query("SELECT * FROM game WHERE userId = ? AND status = 'in_progress'", [userId]);
 

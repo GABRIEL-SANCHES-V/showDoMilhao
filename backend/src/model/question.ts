@@ -7,10 +7,22 @@ import { QuestionLevel } from "../database/queriesTables/questionQueries.js";
  * @method addQuestion - Method to add a new question
  * @method getRandomQuestions - Method to get 10 random questions
  */
-class Questions{
+class Question{
     private queries = questionQueries;
 
-    public constructor() {};
+    private id: number;
+    private level: QuestionLevel;
+    private statement: string;
+    private options: string[];
+    private correctAnswer: string;
+
+    public constructor(id: number = 0, level: QuestionLevel = QuestionLevel.EASY, statement: string = "", options: string[] = [], correctAnswer: string = "") {
+        this.id = id;
+        this.level = level;
+        this.statement = statement;
+        this.options = options;
+        this.correctAnswer = correctAnswer;
+    }
 
     /**
      * Method to add a new question to the database
@@ -31,14 +43,36 @@ class Questions{
      * @return Array of questions and status true
      * @error Throws an error if there is an issue retrieving questions 
      */
-    public async getRandomQuestions(): Promise<{ questions: { id: number, statement: string, options: string[], correctAnswer: string }[], status: boolean }> {
+    public async getRandomQuestions(): Promise<Question[]> {
         try {
             const response = await this.queries.getRandomQuestions();
-            return response;
+            const Questions: Question[] = response.questions.map(q => new Question(q.id, q.questionLevel, q.statement, q.options, q.correctAnswer));
+            return Questions;
         } catch (error) {
             throw error;
         }
-    } 
+    }
+
+    // Getters
+    getId(): number {
+        return this.id;
+    }
+
+    getLevel(): QuestionLevel {
+        return this.level;
+    }
+
+    getStatement(): string {
+        return this.statement;
+    }
+
+    getOptions(): string[] {
+        return this.options;
+    }
+
+    getCorrectAnswer(): string {
+        return this.correctAnswer;
+    }
 }
 
-export default Questions;
+export default Question;

@@ -7,31 +7,55 @@ enum GameState {
     InProgress = 'inProgress',
     Completed = 'completed'
 }
-// class Game {
-//     private questions: Question[];
-//     private userID: number;
-//     private gameID: number;
-//     private score: number;
 
-//     private user: User;
-//     private gameState: GameState;
-//     private queries = gameQueries;
-//     private question = new Question();
+class Game {
+    private id: number;
+    private score: number;
+    private state: GameState;
+    private user: User;
+    private questions: Question[] = [];
 
-//     public constructor(user: User, gameState: GameState = GameState.NotStarted) {
-//         this.user = new User(user['name'], user['score']);
-//         this.questions = this.question.getRandomQuestions().then(res => res.questions) as unknown as Question[];
-//         this.gameState = gameState;
-//     }
+    public constructor(id: number = 0, score: number = 0, state: GameState = GameState.NotStarted, nameUser: string) {
+        this.id = id;
+        this.score = score;
+        this.state = state;
+        this.user = new User(nameUser);
+    }
 
-    // public async startGame(): Promise<{ gameId: number, status: boolean, userId: number}> {
-    //     try {
-    //     } catch (error) {
-    //         throw error;
-    //     }
-    // }
+    /**
+     * Method to start a new game
+     * @return The created game with the status true
+     * @error Throws an error if there is an issue creating the game
+     */
+    public async startGame(): Promise<{ status: boolean }> {
+        try {
+            await this.user.RegisterUserinDB();
+            this.questions = await (new Question()).getRandomQuestions();
 
-// }
+            if (!this.user.getUserId()) {
+                throw new Error("User ID is not set. Cannot start game.");
+            }
+
+            if (this.questions.length === 0) {
+                throw new Error("No questions available to start the game.");
+            }
+
+            const questionsIds = this.questions.map(q => q.getId());
+            const response = await gameQueries.startGame(this.user.getUserId() as number, questionsIds);
+            
+            this.id = response.id;
+            this.state = GameState.InProgress;
+
+            return { status: response.status };
+
+        } catch (error) {
+            throw error;
+        }
+    }
+
+    
+
+}
 
 /**
  * 1. startGame(criar usuario, pegar as pergunta e as respontas, cria jogo,)
