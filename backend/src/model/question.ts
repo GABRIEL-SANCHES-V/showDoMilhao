@@ -1,4 +1,5 @@
 import questionQueries from "../database/queriesTables/questionQueries.js";
+import { QuestionLevel } from "../database/queriesTables/questionQueries.js";
 
 /**
  * Model class for Question-related operations
@@ -6,36 +7,19 @@ import questionQueries from "../database/queriesTables/questionQueries.js";
  * @method addQuestion - Method to add a new question
  * @method getRandomQuestions - Method to get 10 random questions
  */
-class Question{
+class Questions{
     private queries = questionQueries;
-    private questionLevel: string;
-    private statement: string;
-    private options: string[];
-    private correctAnswer: string;
 
-
-    /**
-     * Method constructor to initialize a Question object
-     * @param questionLevel: string - Level of the question (easy, medium, hard)
-     * @param statement: string - The question statement
-     * @param options: string[] - The answer options for the question
-     * @param correctAnswer: string - The correct answer for the question
-     */
-    public constructor(questionLevel: string = 'easy', statement: string = '', options: string[] = [], correctAnswer: string = '') {
-        this.questionLevel = questionLevel;
-        this.statement = statement;
-        this.options = options;
-        this.correctAnswer = correctAnswer;
-    }
+    public constructor() {};
 
     /**
      * Method to add a new question to the database
      * @return The created question with the generated ID and status true
      * @error Throws an error if there is an issue creating the question
      */
-    public async addQuestion(): Promise<{ id: number, status: boolean }> {
+    public async registerQuestion(questionLevel: QuestionLevel, statement: string, options: string[], correctAnswer: string): Promise<{ id: number, status: boolean }> {
         try {
-            const response = await this.queries.addQuestion(this.questionLevel, this.statement, this.options, this.correctAnswer);
+            const response = await this.queries.registerQuestion(questionLevel, statement, options, correctAnswer);
             return response;
         } catch (error) {
             throw error;
@@ -47,14 +31,14 @@ class Question{
      * @return Array of questions and status true
      * @error Throws an error if there is an issue retrieving questions 
      */
-    public async getRandomQuestions(): Promise<{ questions: any[], status: boolean }> {
+    public async getRandomQuestions(): Promise<{ questions: { id: number, statement: string, options: string[], correctAnswer: string }[], status: boolean }> {
         try {
             const response = await this.queries.getRandomQuestions();
             return response;
         } catch (error) {
             throw error;
         }
-    }
+    } 
 }
 
-export default Question;
+export default Questions;

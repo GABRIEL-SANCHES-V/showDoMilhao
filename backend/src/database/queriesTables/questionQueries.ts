@@ -1,5 +1,11 @@
 import Database from "../database.js";
 
+enum QuestionLevel {
+    EASY = 'easy',
+    MEDIUM = 'medium',
+    HARD = 'hard'
+}
+
 class QuestionQueries {
   private db: Database;
 
@@ -16,7 +22,7 @@ class QuestionQueries {
    * @returns The created question with the generated ID
    * @error Throws an error if there is an issue creating the question
    */
-    public async addQuestion(questionLevel: string, statement: string, options: string[], correctAnswer: string): Promise<{ id: number, status: boolean }> {
+    public async registerQuestion(questionLevel: QuestionLevel, statement: string, options: string[], correctAnswer: string): Promise<{ id: number, status: boolean }> {
         try {
             const { alternativeA, alternativeB, alternativeC, alternativeD } =
             { alternativeA: options[0], alternativeB: options[1], alternativeC: options[2], alternativeD: options[3] };
@@ -37,7 +43,7 @@ class QuestionQueries {
    * @returns Array of questions
    * @error Throws an error if there is an issue retrieving questions
    */
-    public async getRandomQuestions(): Promise<{ questions: any[], status: boolean }> {
+    public async getRandomQuestions(): Promise<{ questions: { questionLevel: QuestionLevel, id: number, statement: string, options: string[], correctAnswer: string }[], status: boolean }> {
         try {
         const sql = `
             (SELECT * FROM question WHERE questionLevel = 'easy' ORDER BY RAND() LIMIT 4)
@@ -48,8 +54,16 @@ class QuestionQueries {
         `;
         const [rows] = await this.db.query(sql);
 
+        const questions = (rows as any[]).map(row => ({
+            questionLevel: row.questionLevel,
+            id: row.id,
+            statement: row.statement,
+            options: [row.alternativeA, row.alternativeB, row.alternativeC, row.alternativeD],
+            correctAnswer: row.correctAnswer
+        }));
+
         return {
-            questions: rows as any[],
+            questions: questions,
             status: true
         };
         } catch (error) {
@@ -78,3 +92,4 @@ class QuestionQueries {
 }
 
 export default new QuestionQueries();
+export { QuestionLevel };
