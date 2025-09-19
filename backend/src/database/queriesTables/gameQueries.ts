@@ -53,6 +53,22 @@ class GameQueries {
             throw error;
         }
     }
+
+
+    /**
+     * Method to clear all games from the database (for testing purposes)
+     * @returns Promise that resolves when all games are cleared
+     */
+    public async clearGames(): Promise<void> {
+        try {
+            const sql = "DELETE FROM game";
+            const reset_id = "ALTER TABLE game AUTO_INCREMENT = 1";
+            await this.db.query(reset_id);
+            await this.db.query(sql);
+        } catch (error) {
+            throw error;
+        }
+    }
 }
 
-export default GameQueries;
+export default new GameQueries();

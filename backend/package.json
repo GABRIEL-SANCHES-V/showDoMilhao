@@ -10,7 +10,8 @@
     "start": "node dist/index.js",
     "test": "node --import tsx --import ./test/setup.ts --test --test-concurrency=1 --test-reporter=spec",
     "test_userQueries": "node --import tsx --import ./test/setup.ts --test --test-concurrency=1 --test-reporter=spec ./test/database/userQueries.test.ts",
-    "test_questionsQueries": "node --import tsx --import ./test/setup.ts --test --test-concurrency=1 --test-reporter=spec ./test/database/questionQueries.test.ts"
+    "test_questionsQueries": "node --import tsx --import ./test/setup.ts --test --test-concurrency=1 --test-reporter=spec ./test/database/questionQueries.test.ts",
+    "test_gameQueries": "node --import tsx --import ./test/setup.ts --test --test-concurrency=1 --test-reporter=spec ./test/database/gameQueries.test.ts"
   },
   "keywords": [],
   "author": "",
