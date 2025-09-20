@@ -81,6 +81,22 @@ class User {
         }
     }
 
+    /**
+     * Method to delete a user by ID
+     * @param userId : number - ID of the user to delete
+     * @returns status of the operation
+     * @error Throws an error if there is an issue deleting the user
+    */
+
+    public async deleteUserById(userId: number): Promise<{ status: boolean }> {
+        try {
+            const response = await this.queries.deleteUserById(userId);
+            return response;
+        } catch (error) {
+            throw error;
+        }
+    }
+
     public getName(): string {
         return this.name;
     }

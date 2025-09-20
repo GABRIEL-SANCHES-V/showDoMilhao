@@ -86,6 +86,21 @@ class UserQueries {
             throw error;
         }
     }
+
+    /**
+     * Deletes a user from the database by their ID
+     * @param userId : number - ID of the user to be deleted
+     * @returns Object with the status of the operation
+     * @error Throws an error if there is an issue deleting the user
+    */
+    public async deleteUserById(userId: number): Promise<{ status: boolean }> {
+        try {
+            const response = await this.db.query("DELETE FROM user WHERE id = ?", [userId]);
+            return { status: true };
+        } catch (error) {
+            throw error;
+        }
+    }
 }
 
 export default new UserQueries();

@@ -17,8 +17,7 @@ class GameQueries {
         try{
             const sql = "INSERT INTO game (userId, questionIds) VALUES (?, ?)";
             const result = await this.db.query(sql, [userId, JSON.stringify(questionIds)]);
-            const gameId = (result as any).insertId;
-            return { id: gameId, status: true };
+            return { id: (result as any)[0].insertId, status: true };
         } catch (error) {
             throw error;
         }
@@ -43,12 +42,13 @@ class GameQueries {
     /**
      * Method to delete an in-progress game for a user
      * @param userId - ID of the user whose game is to be deleted
+     * @param gameId - ID of the game to be deleted
      * @returns Promise that resolves when the game is deleted
      */
-    public async deleteInProgressGame(userId: number): Promise<boolean> {
+    public async deleteInProgressGame(userId: number, gameId: number): Promise<boolean> {
         try{
-            const sql = "DELETE FROM game WHERE userId = ? AND status = 'in_progress'";
-            await this.db.query(sql, [userId]);
+            const sql = "DELETE FROM game WHERE userId = ? AND id = ? AND status = 'in_progress'";
+            await this.db.query(sql, [userId, gameId]);
             return true;
         } catch (error) {
             throw error;
@@ -64,8 +64,8 @@ class GameQueries {
         try {
             const sql = "DELETE FROM game";
             const reset_id = "ALTER TABLE game AUTO_INCREMENT = 1";
-            await this.db.query(reset_id);
             await this.db.query(sql);
+            await this.db.query(reset_id);
         } catch (error) {
             throw error;
         }
