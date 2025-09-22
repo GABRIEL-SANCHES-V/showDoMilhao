@@ -88,6 +88,23 @@ class Game {
     }
 
 
+    /**
+     * Method to get ranking of scores of all users
+     * @returns Array of user objects with their scores in descending order
+     * @error Throws an error if there is an issue retrieving users
+     */
+
+    public async getUserRanking(): Promise<{ status: boolean, ranking: { name: string, score: number }[] }> {
+        try {
+            const response = await this.user.getAllUsers();
+            return { status: response.status, ranking: response.users };
+        } catch (error) {
+            throw error;
+        }
+    }
+
+
+
     // Getters
     getGameId(): number {
         return this.gameId;

@@ -10,8 +10,8 @@ import type { Request, Response } from "express";
  */
 export async function createUser(req: Request, res: Response) {
     try {
-        const { name, score } = req.body;
-        const response = await UserService.createUser(name, score);
+        const { name } = req.body;
+        const response = await UserService.createUser(name);
         res.status(response.status ? 200 : 400).json(response);
     } catch (error) {
         res.status(500).json({ status: false, message: "Process creation user failed", user: null });

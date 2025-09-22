@@ -1,17 +1,15 @@
-import { create } from 'domain';
 import User from '../model/user.js';
 
 /**
  * Method to create a new user
  * @param name - Name of the user
- * @param score - Score of the user
  * @return Object with the status of the operation
  * @error Throws an error if there is an issue creating the user
  */
-export async function createUser(name: string, score: number) {
+export async function createUser(name: string) {
     try {
-        const user = new User(name, score);
-        const response = await user.createUser();
+        const user = new User(name);
+        const response = await user.RegisterUserinDB();
         
         const message = response.status ? 'User created successfully' : 'Error creating user';
         const infoUser = {
