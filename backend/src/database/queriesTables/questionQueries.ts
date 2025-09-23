@@ -43,29 +43,31 @@ class QuestionQueries {
    * @returns Array of questions
    * @error Throws an error if there is an issue retrieving questions
    */
-    public async getRandomQuestions(): Promise<{ questions: { questionLevel: QuestionLevel, id: number, statement: string, options: string[], correctAnswer: string }[], status: boolean }> {
+    public async getRandomQuestions(): Promise<{ questions: { questionLevel: QuestionLevel, id: number, statement: string, options: {alternativeA: string, alternativeB: string, alternativeC: string, alternativeD: string}, correctAnswer: string }[] }> {
         try {
-        const sql = `
-            (SELECT * FROM question WHERE questionLevel = 'easy' ORDER BY RAND() LIMIT 4)
-            UNION
-            (SELECT * FROM question WHERE questionLevel = 'medium' ORDER BY RAND() LIMIT 4)
-            UNION
-            (SELECT * FROM question WHERE questionLevel = 'hard' ORDER BY RAND() LIMIT 2)
-        `;
-        const [rows] = await this.db.query(sql);
+            const sql = `
+                (SELECT * FROM question WHERE questionLevel = 'easy' ORDER BY RAND() LIMIT 4)
+                UNION
+                (SELECT * FROM question WHERE questionLevel = 'medium' ORDER BY RAND() LIMIT 4)
+                UNION
+                (SELECT * FROM question WHERE questionLevel = 'hard' ORDER BY RAND() LIMIT 2)
+            `;
+            const [rows] = await this.db.query(sql);
 
-        const questions = (rows as any[]).map(row => ({
-            questionLevel: row.questionLevel,
-            id: row.id,
-            statement: row.statement,
-            options: [row.alternativeA, row.alternativeB, row.alternativeC, row.alternativeD],
-            correctAnswer: row.correctAnswer
-        }));
+            const questions = (rows as any[]).map(row => ({
+                questionLevel: (row.questionLevel as QuestionLevel),
+                id: (row.id as number),
+                statement: (row.statement as string),
+                options: {
+                    alternativeA: (row.alternativeA as string), 
+                    alternativeB: (row.alternativeB as string),
+                    alternativeC: (row.alternativeC as string),
+                    alternativeD: (row.alternativeD as string)
+                },
+                correctAnswer: (row.correctAnswer as string)
+            }));
 
-        return {
-            questions: questions,
-            status: true
-        };
+            return { questions: questions };
         } catch (error) {
             throw error;
         }
