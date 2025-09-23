@@ -10,10 +10,10 @@ class UserQueries {
 
     /**
      * Get all users from the database ordered by score in descending order
-     * @returns Array of users with their scores
+     * @returns Array of users with their scores and names ordered by score
      * @error Throws an error if there is an issue retrieving users
      */
-    public async getAllUsers(): Promise<{ users: { name: string, score: number }[], status: boolean }> {
+    public async getRankingOfUsers(): Promise<{ users: { name: string, score: number }[]}> {
         try {
             const sql = "SELECT name, score FROM user ORDER BY score DESC";
             const [rows] = await this.db.query(sql);
@@ -23,10 +23,7 @@ class UserQueries {
                 listUsers.push({ name: row.name, score: row.score });
             }
 
-            return {
-                users: listUsers,
-                status: true
-            };
+            return { users: listUsers };
         } catch (error) {
             throw error;
         }
@@ -35,17 +32,18 @@ class UserQueries {
     /**
      * Register a new user in the database
      * @param name - String - Name of the user
-     * @param score - Number - Score of the user
-     * @returns The created user with the generated ID
+     * @returns ID of the created user
      * @error Throws an error if there is an issue creating the user
     */
-    public async registerUser(name: string): Promise<{ id: number, name: string, status: boolean }> {
+    public async registerUser(name: string): Promise<{ id: number }> {
         try {
             const sql = "INSERT INTO user (name) VALUES (?)";
             const [result] = await this.db.query(sql, [name]);
-            const insertId = (result as any).insertId;
 
-            return { id: insertId, name, status: true };
+            const insertId = (result as any).insertId;
+            const userName = (result as any);
+            
+            return { id: insertId };
 
         } catch (error) {
             throw error;
@@ -75,6 +73,8 @@ class UserQueries {
      * Updates the score of a user in the database
      * @param userId : number - ID of the user
      * @param score : number - New score of the user
+     * @returns Object with the status of the operation
+     * @error Throws an error if there is an issue updating the score
      */
     public async updateScore(userId: number, score: number): Promise<{ status: boolean }> {
         try {
@@ -95,7 +95,7 @@ class UserQueries {
     */
     public async deleteUserById(userId: number): Promise<{ status: boolean }> {
         try {
-            const response = await this.db.query("DELETE FROM user WHERE id = ?", [userId]);
+            await this.db.query("DELETE FROM user WHERE id = ?", [userId]);
             return { status: true };
         } catch (error) {
             throw error;

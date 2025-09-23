@@ -25,13 +25,12 @@ describe("UserQueries Integration Tests", {concurrency: false} , () => {
     it('Should register a new user', async () => {
         const user = await UserQueries.registerUser('John Doe');
         const userId = user.id;
-        const userName = user.name;
 
         assert.ok(userId, "User ID should be defined");
-        assert.strictEqual(userName, 'John Doe', "User name should match the input");
+        assert.strictEqual(userId, 1, "User ID should be 1 for the first user");
     });
 
-    it('slould register many users', async () => {
+    it('should register many users', async () => {
         const listUsers = [
             { name: 'Alice', score: 10 },
             { name: 'Bob', score: 20 },
@@ -45,10 +44,13 @@ describe("UserQueries Integration Tests", {concurrency: false} , () => {
             { name: 'Jack', score: 100 }
         ]
 
-        for (const user of listUsers) {
+        let counter = 1;
+
+        for (const user of (listUsers)) {
             const createdUser = await UserQueries.registerUser(user.name);
             assert.ok(createdUser.id, "User ID should be defined");
-            assert.strictEqual(createdUser.name, user.name, "User name should match the input");
+            assert.strictEqual(createdUser.id, counter, `User ID should be ${counter} for the user ${user.name}`);
+            counter++;
         }
     });
 
@@ -69,14 +71,14 @@ describe("UserQueries Integration Tests", {concurrency: false} , () => {
         for (const user of listUsers) {
             await UserQueries.registerUser(user.name);
         }
-        const users = await UserQueries.getAllUsers();
+        const users = await UserQueries.getRankingOfUsers();
         assert.ok(Array.isArray(users.users), "Users should be an array");
         assert.ok(users.users.length == 10, "There should be exactly 10 users in the database");
     });
 
     it('Should clear all users', async () => {
         await UserQueries.clearUsers();
-        const users = await UserQueries.getAllUsers();
+        const users = await UserQueries.getRankingOfUsers();
         assert.ok(Array.isArray(users.users), "Users should be an array");
         assert.ok(users.users.length === 0, "There should be no users in the database");
     });
@@ -86,7 +88,7 @@ describe("UserQueries Integration Tests", {concurrency: false} , () => {
         const userId = user.id;
 
         await UserQueries.updateScore(userId, 150);
-        const users = await UserQueries.getAllUsers();
+        const users = await UserQueries.getRankingOfUsers();
         const score = (users.users as any)[0].score;
 
         assert.ok(Array.isArray(users.users), "Users should be an array");
