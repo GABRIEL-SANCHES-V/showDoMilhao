@@ -59,7 +59,7 @@ describe("GameQueries Integration Tests", {concurrency: false} , () => {
         const questionIds = [11, 12, 13, 14, 15];
 
         await GameQueries.startGame(userId, questionIds);
-        const result = await GameQueries.deleteInProgressGame(userId);
+        const result = await GameQueries.deleteInProgressGame(userId, 1);
         assert.strictEqual(result, true);
 
         const [rows] = await connection.query("SELECT * FROM game WHERE userId = ? AND status = 'in_progress'", [userId]);
