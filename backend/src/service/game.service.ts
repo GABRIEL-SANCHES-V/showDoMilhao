@@ -23,7 +23,7 @@ class GameService {
                 throw new Error("No questions available to start the game.");
             }
 
-            const gameId = (await GameRepository.startGame(user.getId(), questionIds)).id;
+            const { id: gameId } = (await GameRepository.startGame(user.getId(), questionIds));
             const game = new Game();
             game.setId(gameId);
             game.setState(GameState.InProgress);
