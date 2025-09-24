@@ -43,7 +43,7 @@ class GameService {
      * @param score - Finished Score of user
      * @returns a messagem of sucessfully or error
      */
-    public async finishGame(game: Game, score: number): Promise<{ status: boolean }>{
+    public async finishGame(game: Game, score: number): Promise<{game: Game, status: boolean }>{
         try {
             if (game.getState() !== GameState.InProgress) {
                 throw new Error("Game is not in progress. Cannot finish game.");
@@ -62,7 +62,7 @@ class GameService {
                 throw new Error("Failed to finish game.");
             }
 
-            return { status: success };
+            return { game: game, status: success };
         } catch (error) {
             throw error
         }

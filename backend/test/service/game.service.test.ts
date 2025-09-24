@@ -50,12 +50,12 @@ describe("GameService Integration Tests", {concurrency: false} , () => {
         const initialGame = (await GameService.startGame(userName)).game;
 
         const scoreToSet = 5000;
-        const finishedGameResponse = await GameService.finishGame(initialGame, scoreToSet);
-        assert.strictEqual(finishedGameResponse.status, true, "Finishing game should return status true");
+        const { game: finishedGameResponse , status: finishStatus } = await GameService.finishGame(initialGame, scoreToSet);
+        assert.strictEqual(finishStatus, true, "Finishing game should return status true");
 
-        assert.strictEqual(initialGame.getState(), GameState.Completed, "Game state should be 'Completed' after finishing");
-        assert.strictEqual(initialGame.getScore(), scoreToSet, `Game score should be ${scoreToSet} after finishing`);
-        assert.strictEqual(initialGame.getUser().getScore(), scoreToSet, `User score should be updated to ${scoreToSet} after finishing game`);
+        assert.strictEqual(finishedGameResponse.getState(), GameState.Completed, "Game state should be 'Completed' after finishing");
+        assert.strictEqual(finishedGameResponse.getScore(), scoreToSet, `Game score should be ${scoreToSet} after finishing`);
+        assert.strictEqual(finishedGameResponse.getUser().getScore(), scoreToSet, `User score should be updated to ${scoreToSet} after finishing game`);
     });
 
     it('should drop a game thas is not completed', async () => {
