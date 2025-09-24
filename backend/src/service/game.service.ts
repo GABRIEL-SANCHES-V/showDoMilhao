@@ -74,17 +74,24 @@ class GameService {
      * @param game - Instance of the game to be dropped
      * @return Object with the status of the operation
      */
-    public async dropGame(game: Game): Promise<{ status: boolean }> {
+    public async dropGame(game: Game): Promise<{ game: Game, status: boolean }> {
         try {
+            const success = await GameRepository.deleteInProgressGame(game.getId());
+
             await UserService.deleteUserById(game.getUser());
 
-            const success = await GameRepository.deleteInProgressGame(game.getId());
+            game.setScore(0);
+            game.setState(GameState.Dropped);
+            game.setId(0);
+            game.setQuestions([]);
+            game.getUser().setId(0);
+            game.getUser().setScore(0);
 
             if (!success) {
                 throw new Error("Failed to drop game.");
             }
 
-            return { status: success };
+            return { game: game, status: success };
 
         } catch (error) {
             throw error;
@@ -127,10 +134,34 @@ class GameService {
                 throw new Error("Failed to clear users.");
             }
 
+            const successQuestions = (await QuestionService.clearQuestions()).status;
+            if (!successQuestions) {
+                throw new Error("Failed to clear questions.");
+            }
+
             return true;
-            
+
+        } catch (error) {
+            throw error;
+        }
+    }
+
+    /**
+     * Method to set up questions in the database
+     * @returns Promise that resolves when initial questions are set up
+     */
+    public async setupInitialQuestions(): Promise<boolean> {
+        try {
+            const success = (await QuestionService.setupInitialQuestions()).status;
+            if (!success) {
+                throw new Error("Failed to set up initial questions.");
+            }
+
+            return true;
         } catch (error) {
             throw error;
         }
     }
 }
+
+export default new GameService();

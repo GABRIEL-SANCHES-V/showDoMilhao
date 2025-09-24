@@ -4,7 +4,8 @@ import { Question } from './question.model.js';
 export enum GameState {
     NotStarted = 'notStarted',
     InProgress = 'inProgress',
-    Completed = 'completed'
+    Completed = 'completed',
+    Dropped = 'dropped'
 }
 
 export class Game {
