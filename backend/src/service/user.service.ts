@@ -1,5 +1,5 @@
  import userRepository from "../repository/user.repository.js";
- import { User, Role } from "../model/user.model.js";
+ import { User } from "../model/user.model.js";
 
 
 class userService {
