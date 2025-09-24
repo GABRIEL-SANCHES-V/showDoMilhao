@@ -24,7 +24,7 @@ class GameController {
             gameManeger.addGame(game);
 
             const infosGame: {
-                gameId: number | undefined,
+                gameId: number,
                 questions: {
                     id: number,
                     level: Difficulty,

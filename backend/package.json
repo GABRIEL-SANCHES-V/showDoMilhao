@@ -12,7 +12,8 @@
     "test.service.user": "node --import tsx --import ./test/setup.ts --test ./test/service/user.service.test.ts  --test-concurrency=1 --test-reporter=spec",
     "test.service.question": "node --import tsx --import ./test/setup.ts --test ./test/service/question.service.test.ts  --test-concurrency=1 --test-reporter=spec",
     "test.service.game": "node --import tsx --import ./test/setup.ts --test ./test/service/game.service.test.ts  --test-concurrency=1 --test-reporter=spec",
-    "test.service.gameManeger": "node --import tsx --import ./test/setup.ts --test ./test/service/gameManeger.service.test.ts  --test-concurrency=1 --test-reporter=spec"
+    "test.service.gameManeger": "node --import tsx --import ./test/setup.ts --test ./test/service/gameManeger.service.test.ts  --test-concurrency=1 --test-reporter=spec",
+    "test.router.game": "node --import tsx --import ./test/setup.ts --test ./test/router/game.router.test.ts  --test-concurrency=1 --test-reporter=spec"
   },
   "keywords": [],
   "author": "",
