@@ -8,7 +8,7 @@
     "dev": "nodemon",
     "build": "tsc",
     "start": "node dist/index.js",
-    "test.all": "node --import tsx --import ./test/setup.ts --test --test-concurrency=1 --test-reporter=spec tests/**/*.test.ts",
+    "test.all": "node --import tsx --import ./test/setup.ts --test test/**/*.test.ts --test-concurrency=1 --test-reporter=spec",
     "test.service.user": "node --import tsx --import ./test/setup.ts --test ./test/service/user.service.test.ts  --test-concurrency=1 --test-reporter=spec",
     "test.service.question": "node --import tsx --import ./test/setup.ts --test ./test/service/question.service.test.ts  --test-concurrency=1 --test-reporter=spec",
     "test.service.game": "node --import tsx --import ./test/setup.ts --test ./test/service/game.service.test.ts  --test-concurrency=1 --test-reporter=spec",

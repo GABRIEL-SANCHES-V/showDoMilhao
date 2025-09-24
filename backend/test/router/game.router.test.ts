@@ -6,7 +6,7 @@ import app from '../../src/app.js';
 import pool from '../../src/database/connectionDB.js';
 
 
-describe('User Routes Tests', {concurrency: false},() => {
+describe('Game Routes Tests', {concurrency: false},() => {
     after(() => {
         pool.end();
     });
@@ -27,6 +27,7 @@ describe('User Routes Tests', {concurrency: false},() => {
             .send();
 
         const userName = "Test User 0";
+        
         await request(app)
             .post('/game/start')
             .send({ userName });
