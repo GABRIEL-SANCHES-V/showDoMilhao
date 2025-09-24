@@ -7,11 +7,10 @@ class GameManager{
         return this.game.get(id);
     }
 
-    addGame(game: Game): Game {
+    addGame(game: Game): void {
         if(!this.game.has((game.getId()).toString())) {
             this.game.set((game.getId()).toString(), game);
         }
-        return this.game.get((game.getId()).toString())!;
     }
 
     removeGame(id: string): void {
