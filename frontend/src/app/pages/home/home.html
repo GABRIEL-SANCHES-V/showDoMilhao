@@ -1,31 +1,27 @@
 <!DOCTYPE html>
-
-<html>
+<html lang="pt-br">
 
     <head>
-         <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&display=swap" rel="stylesheet">
-
+        <meta charset="UTF-8">
+        <title>Quiz LoL BR</title>
+        <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="./home.scss">
     </head>
 
     <body>
-
         <section>
-
             <div class="backdrop">
-
                 <div class="video-bg">
                     <video autoplay muted loop>
-                    <source src="video/video_de_fundo_home_page.webm" type="video/webm">
-                    </video>
+                        <source src="video/video_de_fundo_home_page.webm" type="video/webm">
+                    </video>       
                 </div>
-
                 <div class="overlay-1"></div>
                 <div class="overlay-2"></div>
             </div>
 
-
             <!-- <div class="container-main">
-                <a role="button" href="" class="">
+                <a role="button" href="">
                     <span>
                         <img src="images/Logo_Home_Page.png" alt="" class="logo">
                     </span>
@@ -43,18 +39,16 @@
             </div> -->
 
             <div class="container-form">
-                <form onsubmit="" class="form-login">
-                    <label for="userName">Nome do Usuário:</label>
-                    <input type="text" id="userName" name="userName" required>
-                    <button type="submit">Enviar</button>
+                <form class="form-login">
+                    <span class="form-login-title">Quiz de League of Legends Brasileiro</span>
+                    <div class="div-input-form">
+                        <input class="input-form" type="text" name="usuario" placeholder=" " required>
+                        <span class="input-name" data-placeholder="Usuário"></span>
+                    </div>
+                    <button type="submit" class="btn-submit">Entrar</button>
                 </form>
             </div>
-
         </section>
-
-
-
     </body>
-
 
 </html>
