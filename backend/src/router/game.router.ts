@@ -1,5 +1,6 @@
 import { Router } from "express";
 import GameController from "../controller/game.controller.js";
+import { verifyToken } from "../auth/auth.middleware.js";
 
 const gameRouter = Router();
 
@@ -9,7 +10,7 @@ const gameRouter = Router();
  * @returns JSON response with status, message, and game info
  * @error Returns 400 status with error message if there is an issue
  */
-gameRouter.post("/start/", (req, res) => GameController.startGame(req, res));
+gameRouter.post("/start/", verifyToken, (req, res) => GameController.startGame(req, res));
 
 /**
  * Route to finish a game
@@ -17,7 +18,7 @@ gameRouter.post("/start/", (req, res) => GameController.startGame(req, res));
  * @returns JSON response with status and message
  * @error Returns 400 status with error message if there is an issue
  */
-gameRouter.post("/finish/", (req, res) => GameController.finishGame(req, res));
+gameRouter.post("/finish/", verifyToken, (req, res) => GameController.finishGame(req, res));
 
 /**
  * Route to drop a game
@@ -25,28 +26,28 @@ gameRouter.post("/finish/", (req, res) => GameController.finishGame(req, res));
  * @returns JSON response with status and message
  * @error Returns 400 status with error message if there is an issue
  */
-gameRouter.post("/drop/", (req, res) => GameController.dropGame(req, res));
+gameRouter.post("/drop/", verifyToken, (req, res) => GameController.dropGame(req, res));
 
 /**
  * Route to get game ranking
  * @returns JSON response with status, message, and ranking info
  * @error Returns 400 status with error message if there is an issue
  */
-gameRouter.get("/ranking/", (req, res) => GameController.getRanking(req, res));
+gameRouter.get("/ranking/", verifyToken, (req, res) => GameController.getRanking(req, res));
 
 /**
  * Route to setup initial questions
  * @returns JSON response with status and message
  * @error Returns 400 status with error message if there is an issue
  */
-gameRouter.post("/setup-questions/", (req, res) => GameController.setupInitialQuestions(req, res));
+gameRouter.post("/setup-questions/", verifyToken, (req, res) => GameController.setupInitialQuestions(req, res));
 
 /**
  * Route to clear all games
  * @returns JSON response with status and message
  * @error Returns 400 status with error message if there is an issue
  */
-gameRouter.delete("/clear-games/", (req, res) => GameController.clearAllGames(req, res));
+gameRouter.delete("/clear-games/", verifyToken, (req, res) => GameController.clearAllGames(req, res));
 
 
 export default gameRouter;

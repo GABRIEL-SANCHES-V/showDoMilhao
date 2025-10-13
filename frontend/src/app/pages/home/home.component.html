@@ -1,0 +1,58 @@
+
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&display=swap" rel="stylesheet">
+
+<section>
+    <div class="backdrop">
+        <div class="video-bg">
+            <video autoplay muted loop>
+                <source src="video/video_de_fundo_home_page.webm" type="video/webm" />
+            </video>
+        </div>
+        <div class="overlay-1"></div>
+        <div class="overlay-2"></div>
+    </div>
+
+    <div class="container-main" *ngIf="!showForm">
+        <a role="button" href="">
+            <span>
+                <img src="images/Logo_Home_Page.png" alt="" class="logo" />
+            </span>
+        </a>
+
+        <div class="div-text">
+            <h3>
+                Game de perguntas e respostas sobre o League of Legends brasileiro
+            </h3>
+        </div>
+
+        <a href="#" class="btn-submit-main" (click)="openForm($event)">
+            Jogar
+        </a>
+    </div>
+
+    <div class="container-form" *ngIf="showForm">
+        <form class="form-login" (ngSubmit)="startGame()">
+            <span class="form-login-title">
+                Quiz do League of Legends Brasileiro
+            </span>
+
+            <div class="div-input-form">
+                <input
+                    class="input-form"
+                    type="text"
+                    [(ngModel)]="user"
+                    name="usuario"
+                    placeholder=" "
+                    required
+                    />
+                <span class="input-name" data-placeholder="Usuário"></span>
+            </div>
+
+            <button type="submit" class="btn-submit">Iniciar Jogo</button>
+
+            <button type="button" class="btn-back" (click)="closeForm()">Voltar</button>
+        </form>
+    </div>
+
+</section>
+
