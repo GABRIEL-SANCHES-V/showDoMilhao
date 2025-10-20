@@ -1,0 +1,35 @@
+
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&display=swap" rel="stylesheet">
+
+<section>
+
+    <div class="backdrop">
+        <div class="video-bg">
+            <video autoplay muted loop>
+                <source src="video/video_de_fundo_home_page.webm" type="video/webm" />
+            </video>
+        </div>
+        <div class="overlay-1"></div>
+        <div class="overlay-2"></div>
+    </div>
+
+
+
+    <div class="container-form">
+        <form class="form-login" onsubmit="return false;">
+
+            <div class="question">
+                Qual é o maior planeta do Sistema Solar?
+            </div>
+
+            <div class="answers">
+                <button class="answer" onclick="checkAnswer(this, false)">A) Terra</button>
+                <button class="answer" onclick="checkAnswer(this, false)">B) Marte</button>
+                <button class="answer" onclick="checkAnswer(this, true)">C) Júpiter</button>
+                <button class="answer" onclick="checkAnswer(this, false)">D) Saturno</button>
+            </div>
+        </form>
+    </div>
+
+
+</section>

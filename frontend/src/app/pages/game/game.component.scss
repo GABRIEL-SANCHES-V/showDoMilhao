@@ -1,0 +1,120 @@
+/* ==================== CONFIGURAÇÕES GERAIS ==================== */
+*,
+::after,
+::before {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+/* ==================== BACKGROUND ==================== */
+.video-bg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -3;
+    overflow: hidden;
+}
+
+.video-bg video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.overlay-1 {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.342);
+    z-index: -2;
+}
+
+.overlay-2 {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to bottom,
+        rgba(112, 112, 112, 0.11),
+        rgba(78, 78, 78, 0.582));
+    z-index: -1;
+}
+
+
+/* ==================== FORM CONTAINER ==================== */
+.container-form {
+    background-color: #184f69e7;
+    width: 790px;
+    border-radius: 10px;
+    padding: 40px 30px;
+    margin: 10% auto;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
+}
+
+/* ==================== PERGUNTA ==================== */
+.question {
+    display: block;
+    font-family: 'Cinzel', serif;
+    font-size: 150%;
+    color: white;
+    text-align: justify;
+    margin-bottom: 30px;
+    text-shadow:
+        0 0 5px #7e7e7e,
+        0 0 10px #272310,
+        0 0 20px #ffae00,
+        2px 2px 4px rgba(0, 0, 0, 0.8);
+}
+
+/* ==================== RESPOSTAS ==================== */
+.answers {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.answer {
+    background: transparent;
+    border: 2px solid #ffae00;
+    border-radius: 8px;
+    color: white;
+    font-family: 'Cinzel', serif;
+    font-size: 16px;
+    padding: 12px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-shadow:
+        0 0 5px #7e7e7e,
+        0 0 10px #272310,
+        0 0 20px #ffae00,
+        2px 2px 4px rgba(0, 0, 0, 0.8);
+
+    &:hover {
+        background-color: #ffae00;
+        color: #001f3f;
+        transform: scale(1.03);
+    }
+
+    &.correct {
+        background-color: #28a745;
+        border-color: #28a745;
+        color: white;
+    }
+
+    &.wrong {
+        background-color: #dc3545;
+        border-color: #dc3545;
+        color: white;
+    }
+
+    &:disabled {
+        opacity: 0.7;
+        cursor: not-allowed;
+    }
+}
