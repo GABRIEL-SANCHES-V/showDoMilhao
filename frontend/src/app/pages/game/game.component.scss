@@ -1,0 +1,332 @@
+/* ==================== CONFIGURAÇÕES GERAIS ==================== */
+*,
+::after,
+::before {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+/* ==================== BACKGROUND ==================== */
+.video-bg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -3;
+    overflow: hidden;
+}
+
+.video-bg video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.overlay-1,
+.overlay-2 {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.overlay-1 {
+    background-color: rgba(0, 0, 0, 0.342);
+    z-index: -2;
+}
+
+.overlay-2 {
+    background: linear-gradient(to bottom, rgba(112, 112, 112, 0.11), rgba(78, 78, 78, 0.582));
+    z-index: -1;
+}
+
+/* ==================== FORM CONTAINER ==================== */
+.container-form {
+    background-color: #184f69e7;
+    width: 90%;
+    max-width: 790px;
+    border-radius: 10px;
+    padding: 40px 30px 50px 30px;
+    margin: 6% auto;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
+    display: flex;
+    flex-direction: column;
+}
+
+/* ==================== PERGUNTA ==================== */
+.question {
+    display: block;
+    font-family: 'Cinzel', serif;
+    font-size: clamp(1.1rem, 2.5vw, 1.5rem);
+    color: white;
+    text-align: justify;
+    margin-bottom: 25px;
+    text-shadow: 0 0 5px #7e7e7e,
+                 0 0 10px #272310,
+                 0 0 20px #ffae00,
+                 2px 2px 4px rgba(0, 0, 0, 0.8);
+}
+
+/* ==================== RESPOSTAS ==================== */
+.answers {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.answer {
+    width: 100%;
+    background: transparent;
+    border: 2px solid #ffae00;
+    border-radius: 8px;
+    color: white;
+    font-family: 'Cinzel', serif;
+    font-size: clamp(0.9rem, 2vw, 1rem);
+    padding: 12px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-shadow: 0 0 5px #7e7e7e,
+                 0 0 10px #272310,
+                 0 0 20px #ffae00,
+                 2px 2px 4px rgba(0, 0, 0, 0.8);
+}
+
+.answer:hover {
+    background-color: #ffae00;
+    color: #001f3f;
+    transform: scale(1.03);
+}
+
+.answer.correct {
+    background-color: #28a745;
+    border-color: #28a745;
+    color: white;
+}
+
+.answer.wrong {
+    background-color: #dc3545;
+    border-color: #dc3545;
+    color: white;
+}
+
+.answer:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+}
+
+/* ==================== BARRA DE PROGRESSO (LINEAR) ==================== */
+.progress-wrap {
+    width: 100%;
+    margin-top: 40px;
+    text-align: center;
+}
+
+.progress-outer {
+    width: 100%;
+    height: 10px;
+    background-color: rgba(255, 255, 255, 0.2);
+    border-radius: 8px;
+    overflow: hidden;
+    position: relative;
+}
+
+.progress-inner {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, #ffae00, #ffcf40);
+    border-radius: 8px;
+    transition: width 0.4s ease;
+}
+
+.progress-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 8px;
+    color: #ffffff;
+    font-family: 'Cinzel', serif;
+    font-size: clamp(0.8rem, 2vw, 0.95rem);
+    text-shadow: 0 0 6px rgba(0, 0, 0, 0.5);
+}
+
+#progressLabel,
+#progressPercent {
+    font-weight: 600;
+    letter-spacing: 0.4px;
+}
+
+/* ==================== BARRA ESTILO SHOW DO MILHÃO ==================== */
+.milhao-progress {
+    display: flex;
+    justify-content: space-between;
+    position: relative;
+    margin: 25px 0 10px 0;
+}
+
+.milhao-progress::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width: 100%;
+    height: 6px;
+    background-color: rgba(255, 255, 255, 0.2);
+    transform: translateY(-50%);
+    border-radius: 3px;
+    z-index: 1;
+}
+
+.step {
+    position: relative;
+    z-index: 2;
+    width: 24px;
+    height: 24px;
+    background-color: rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-family: 'Cinzel', serif;
+    font-size: 0.7rem;
+    font-weight: 700;
+}
+
+.step.completed {
+    background-color: #ffae00;
+    color: #001f3f;
+    box-shadow: 0 0 10px #ffae00, 0 0 20px #ffae00;
+}
+
+.step::after {
+    content: attr(data-label);
+    position: absolute;
+    top: -28px;
+    left: 50%;
+    transform: translateX(-50%);
+    white-space: nowrap;
+    font-size: 0.7rem;
+    font-family: 'Cinzel', serif;
+    color: #fff;
+    text-align: center;
+    font-weight: 600;
+}
+
+/* ==================== BOTÕES DE AÇÃO ==================== */
+.actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-top: 35px;
+}
+
+.left-actions,
+.right-actions {
+    display: flex;
+    gap: 20px;
+}
+
+.help-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0px;
+}
+
+.action-btn {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    border: 2px solid #ffae00;
+    background: transparent;
+    color: #ffae00;
+    font-size: 1.3rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-shadow: 0 0 5px #7e7e7e,
+                 0 0 10px #272310,
+                 0 0 20px #ffae00,
+                 2px 2px 4px rgba(0, 0, 0, 0.8);
+}
+
+.action-btn:hover {
+    background-color: #ffae00;
+    color: #001f3f;
+    transform: scale(1.1);
+    box-shadow: 0 0 10px #ffae00, 0 0 20px #ffae00;
+}
+
+.exit-btn {
+    border-color: #dc3545;
+    color: #dc3545;
+}
+
+.exit-btn:hover {
+    background-color: #dc3545;
+    color: white;
+    box-shadow: 0 0 10px #dc3545, 0 0 20px #dc3545;
+}
+
+.help-count {
+    color: #ffffff;
+    font-family: 'Cinzel', serif;
+    font-size: clamp(0.8rem, 2vw, 0.9rem);
+    text-shadow: 0 0 6px rgba(0, 0, 0, 0.6);
+    letter-spacing: 0.5px;
+}
+
+/* ==================== RESPONSIVIDADE ==================== */
+@media (max-width: 900px) {
+    .step::after {
+        font-size: 0.6rem;
+        top: -22px;
+    }
+}
+
+@media (max-width: 600px) {
+    .container-form {
+        padding: 25px 20px 35px 20px;
+        margin: 15% auto;
+    }
+
+    .answers {
+        gap: 10px;
+    }
+
+    .progress-wrap {
+        margin-top: 25px;
+    }
+
+    .progress-meta {
+        flex-direction: column;
+        gap: 5px;
+        text-align: center;
+    }
+
+    .help-btn {
+        gap: 3px;
+    }
+
+    .help-count {
+        font-size: 0.8rem;
+    }
+
+    .milhao-progress {
+        flex-wrap: wrap;
+        gap: 8px;
+    }
+
+    .step {
+        width: 18px;
+        height: 18px;
+        font-size: 0.5rem;
+    }
+
+    .step::after {
+        top: -15px;
+        font-size: 0.45rem;
+    }
+}
