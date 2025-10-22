@@ -13,22 +13,62 @@
         <div class="overlay-2"></div>
     </div>
 
+<div class="container-form">
+    <form class="form-login" onsubmit="return false;">
+        <div class="question">
+            Qual é o maior planeta do Sistema Solar?
+        </div>
 
+        <div class="answers">
+            <button class="answer" onclick="checkAnswer(this, false)">A) Terra</button>
+            <button class="answer" onclick="checkAnswer(this, false)">B) Marte</button>
+            <button class="answer" onclick="checkAnswer(this, true)">C) Júpiter</button>
+            <button class="answer" onclick="checkAnswer(this, false)">D) Saturno</button>
+        </div>
+    </form>
 
-    <div class="container-form">
-        <form class="form-login" onsubmit="return false;">
-
-            <div class="question">
-                Qual é o maior planeta do Sistema Solar?
+    <div class="progress-wrap">
+            <div class="milhao-progress">
+                <div class="step" data-label="R$ 100"></div>
+                <div class="step" data-label="R$ 200"></div>
+                <div class="step" data-label="R$ 300"></div>
+                <div class="step" data-label="R$ 500"></div>
+                <div class="step" data-label="R$ 1K"></div>
+                <div class="step" data-label="R$ 2K"></div>
+                <div class="step" data-label="R$ 4K"></div>
+                <div class="step" data-label="R$ 8K"></div>
+                <div class="step" data-label="R$ 16K"></div>
+                <div class="step" data-label="R$ 32K"></div>
+                <div class="step" data-label="R$ 64K"></div>
+                <div class="step" data-label="R$ 125K"></div>
+                <div class="step" data-label="R$ 250K"></div>
+                <div class="step" data-label="R$ 500K"></div>
+                <div class="step" data-label="R$ 1M"></div>
             </div>
 
-            <div class="answers">
-                <button class="answer" onclick="checkAnswer(this, false)">A) Terra</button>
-                <button class="answer" onclick="checkAnswer(this, false)">B) Marte</button>
-                <button class="answer" onclick="checkAnswer(this, true)">C) Júpiter</button>
-                <button class="answer" onclick="checkAnswer(this, false)">D) Saturno</button>
+            <div class="progress-meta">
+                <div id="progressLabel">0 de 15 questões</div>
+                <div id="progressPercent">0%</div>
             </div>
-        </form>
+        </div>
+    </div>
+
+    <div class="actions">
+        <div class="left-actions">
+            <div class="help-btn">
+                <span class="help-count" id="skipCount">4/4</span>
+                <button class="action-btn" title="Pular pergunta">⏭️</button>
+            </div>
+
+            <div class="help-btn">
+                <span class="help-count" id="cutCount">2/4</span>
+                <button class="action-btn" title="Cortar metade das respostas">✂️</button>
+            </div>
+        </div>
+
+        <div class="right-actions">
+            <button class="action-btn exit-btn" title="Sair">🚪</button>
+        </div>
     </div>
 
 
